@@ -27,8 +27,10 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-    - name: Build with Gradle
-      run: ./gradlew clean build
+#     - name: Build with Gradle
+#       run: ./gradlew clean build
+    - name: Build App
+      run: ./gradlew bootJar
 
   deploy:
     needs: build
@@ -44,6 +46,7 @@ jobs:
           key: ${{ secrets.KEY }}
           source: "scripts/deploy.sh"
           target: "/home/ec2-user/deploy"
+          strip_components: 1
       - name: Transfer jar
         uses: appleboy/scp-action@master
         with:
@@ -52,6 +55,7 @@ jobs:
           key: ${{ secrets.KEY }}
           source: "./build/libs/*.jar"
           target: "/home/ec2-user/deploy"
+          strip_components: 2
       - name: Execute script
         uses: appleboy/ssh-action@master
         with:
