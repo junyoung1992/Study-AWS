@@ -35,7 +35,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
-        source: "deploy/deploy.sh"
+        source: "scripts/deploy.sh"
         target: "/home/ec2-user/deploy"
         strip_components: 1
     - name: Transfer jar
